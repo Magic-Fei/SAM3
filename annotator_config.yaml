@@ -1,0 +1,58 @@
+# SAM3 标注工具配置文件
+# 可以预设一些常用参数
+
+# 默认模型路径
+default_model_path: "experiments/checkpoints/model_fp16.pt"
+
+# 默认置信度阈值
+default_confidence_threshold: 0.3
+
+# 常用标签列表（快速选择）
+common_labels:
+  - person
+  - car
+  - truck
+  - bus
+  - bicycle
+  - motorcycle
+  - dog
+  - cat
+  - bird
+  - tree
+  - building
+  - road
+  - sidewalk
+  - traffic_light
+  - traffic_sign
+
+# 标签颜色映射（RGB）
+label_colors:
+  person: [255, 0, 0]      # 红色
+  car: [0, 255, 0]         # 绿色
+  truck: [0, 0, 255]       # 蓝色
+  bus: [255, 255, 0]       # 黄色
+  bicycle: [255, 0, 255]   # 洋红
+  motorcycle: [0, 255, 255] # 青色
+  dog: [255, 128, 0]       # 橙色
+  cat: [128, 0, 255]       # 紫色
+
+# UI 设置
+ui_settings:
+  window_width: 1400
+  window_height: 900
+  canvas_min_width: 800
+  canvas_min_height: 600
+  
+# 保存设置
+save_settings:
+  auto_save: false
+  save_image_data: true  # 是否在 JSON 中包含 base64 图像数据
+  polygon_tolerance: 2.0  # 多边形简化容差
+
+# 快捷键（未来扩展）
+shortcuts:
+  load_image: "Ctrl+O"
+  save_json: "Ctrl+S"
+  delete_annotation: "Delete"
+  clear_all: "Ctrl+Shift+C"
+
