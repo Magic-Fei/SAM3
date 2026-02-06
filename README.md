@@ -2,43 +2,7 @@
 
 Meta Superintelligence Labs
 
-[Nicolas Carion](https://www.nicolascarion.com/)\*,
-[Laura Gustafson](https://scholar.google.com/citations?user=c8IpF9gAAAAJ&hl=en)\*,
-[Yuan-Ting Hu](https://scholar.google.com/citations?user=E8DVVYQAAAAJ&hl=en)\*,
-[Shoubhik Debnath](https://scholar.google.com/citations?user=fb6FOfsAAAAJ&hl=en)\*,
-[Ronghang Hu](https://ronghanghu.com/)\*,
-[Didac Suris](https://www.didacsuris.com/)\*,
-[Chaitanya Ryali](https://scholar.google.com/citations?user=4LWx24UAAAAJ&hl=en)\*,
-[Kalyan Vasudev Alwala](https://scholar.google.co.in/citations?user=m34oaWEAAAAJ&hl=en)\*,
-[Haitham Khedr](https://hkhedr.com/)\*, Andrew Huang,
-[Jie Lei](https://jayleicn.github.io/),
-[Tengyu Ma](https://scholar.google.com/citations?user=VeTSl0wAAAAJ&hl=en),
-[Baishan Guo](https://scholar.google.com/citations?user=BC5wDu8AAAAJ&hl=en),
-Arpit Kalla, [Markus Marks](https://damaggu.github.io/),
-[Joseph Greer](https://scholar.google.com/citations?user=guL96CkAAAAJ&hl=en),
-Meng Wang, [Peize Sun](https://peizesun.github.io/),
-[Roman Rädle](https://scholar.google.com/citations?user=Tpt57v0AAAAJ&hl=en),
-[Triantafyllos Afouras](https://www.robots.ox.ac.uk/~afourast/),
-[Effrosyni Mavroudi](https://scholar.google.com/citations?user=vYRzGGEAAAAJ&hl=en),
-[Katherine Xu](https://k8xu.github.io/)°,
-[Tsung-Han Wu](https://patrickthwu.com/)°,
-[Yu Zhou](https://yu-bryan-zhou.github.io/)°,
-[Liliane Momeni](https://scholar.google.com/citations?user=Lb-KgVYAAAAJ&hl=en)°,
-[Rishi Hazra](https://rishihazra.github.io/)°,
-[Shuangrui Ding](https://mark12ding.github.io/)°,
-[Sagar Vaze](https://sgvaze.github.io/)°,
-[Francois Porcher](https://scholar.google.com/citations?user=LgHZ8hUAAAAJ&hl=en)°,
-[Feng Li](https://fengli-ust.github.io/)°,
-[Siyuan Li](https://siyuanliii.github.io/)°,
-[Aishwarya Kamath](https://ashkamath.github.io/)°,
-[Ho Kei Cheng](https://hkchengrex.com/)°,
-[Piotr Dollar](https://pdollar.github.io/)†,
-[Nikhila Ravi](https://nikhilaravi.com/)†,
-[Kate Saenko](https://ai.bu.edu/ksaenko.html)†,
-[Pengchuan Zhang](https://pzzhang.github.io/pzzhang/)†,
-[Christoph Feichtenhofer](https://feichtenhofer.github.io/)†
-
-\* core contributor, ° intern, † project lead, order is random within groups
+For full author list and details, see the [paper](https://ai.meta.com/research/publications/sam-3-segment-anything-with-concepts/).
 
 [[`Paper`](https://ai.meta.com/research/publications/sam-3-segment-anything-with-concepts/)]
 [[`Project`](https://ai.meta.com/sam3)]
@@ -46,14 +10,9 @@ Meng Wang, [Peize Sun](https://peizesun.github.io/),
 [[`Blog`](https://ai.meta.com/blog/segment-anything-model-3/)]
 <!-- [[`BibTeX`](#citing-sam-3)] -->
 
-![SAM 3 architecture](assets/model_diagram.png?raw=true) SAM 3 is a unified foundation model for promptable segmentation in images and videos. It can detect, segment, and track objects using text or visual prompts such as points, boxes, and masks. Compared to its predecessor [SAM 2](https://github.com/facebookresearch/sam2), SAM 3 introduces the ability to exhaustively segment all instances of an open-vocabulary concept specified by a short text phrase or exemplars. Unlike prior work, SAM 3 can handle a vastly larger set of open-vocabulary prompts. It achieves 75-80% of human performance on our new [SA-CO benchmark](https://github.com/facebookresearch/sam3?tab=readme-ov-file#sa-co-dataset) which contains 270K unique concepts, over 50 times more than existing benchmarks.
+SAM 3 is a unified foundation model for promptable segmentation in images and videos. It can detect, segment, and track objects using text or visual prompts such as points, boxes, and masks. Compared to its predecessor [SAM 2](https://github.com/facebookresearch/sam2), SAM 3 introduces the ability to exhaustively segment all instances of an open-vocabulary concept specified by a short text phrase or exemplars. Unlike prior work, SAM 3 can handle a vastly larger set of open-vocabulary prompts. It achieves 75-80% of human performance on our new [SA-CO benchmark](https://github.com/facebookresearch/sam3?tab=readme-ov-file#sa-co-dataset) which contains 270K unique concepts, over 50 times more than existing benchmarks.
 
-This breakthrough is driven by an innovative data engine that has automatically annotated over 4 million unique concepts, creating the largest high-quality open-vocabulary segmentation dataset to date. In addition, SAM 3 introduces a new model architecture featuring a presence token that improves discrimination between closely related text prompts (e.g., “a player in white” vs. “a player in red”), as well as a decoupled detector–tracker design that minimizes task interference and scales efficiently with data.
-
-<p align="center">
-  <img src="assets/dog.gif" width=380 />
-  <img src="assets/player.gif" width=380 />
-</p>
+This breakthrough is driven by an innovative data engine that has automatically annotated over 4 million unique concepts, creating the largest high-quality open-vocabulary segmentation dataset to date. In addition, SAM 3 introduces a new model architecture featuring a presence token that improves discrimination between closely related text prompts (e.g., "a player in white" vs. "a player in red"), as well as a decoupled detector–tracker design that minimizes task interference and scales efficiently with data.
 
 ## Installation
 
@@ -149,37 +108,259 @@ output = response["outputs"]
 
 ## Examples
 
-The `examples` directory contains notebooks demonstrating how to use SAM3 with
-various types of prompts:
-
-- [`sam3_image_predictor_example.ipynb`](examples/sam3_image_predictor_example.ipynb)
-  : Demonstrates how to prompt SAM 3 with text and visual box prompts on images.
-- [`sam3_video_predictor_example.ipynb`](examples/sam3_video_predictor_example.ipynb)
-  : Demonstrates how to prompt SAM 3 with text prompts on videos, and doing
-  further interactive refinements with points.
-- [`sam3_image_batched_inference.ipynb`](examples/sam3_image_batched_inference.ipynb)
-  : Demonstrates how to run batched inference with SAM 3 on images.
-- [`sam3_agent.ipynb`](examples/sam3_agent.ipynb): Demonsterates the use of SAM
-  3 Agent to segment complex text prompt on images.
-- [`saco_gold_silver_vis_example.ipynb`](examples/saco_gold_silver_vis_example.ipynb)
-  : Shows a few examples from SA-Co image evaluation set.
-- [`saco_veval_vis_example.ipynb`](examples/saco_veval_vis_example.ipynb) :
-  Shows a few examples from SA-Co video evaluation set.
-
-There are additional notebooks in the examples directory that demonstrate how to
-use SAM 3 for interactive instance segmentation in images and videos (SAM 1/2
-tasks), or as a tool for an MLLM, and how to run evaluations on the SA-Co
-dataset.
-
-To run the Jupyter notebook examples:
+The `examples` directory contains notebooks demonstrating how to use SAM3 with various types of prompts. To run the examples:
 
 ```bash
-# Make sure you have the notebooks dependencies installed
 pip install -e ".[notebooks]"
-
-# Start Jupyter notebook
 jupyter notebook examples/sam3_image_predictor_example.ipynb
 ```
+
+## Training on Custom Dataset
+
+This section provides a guide for training SAM3 on your own single-class segmentation dataset.
+
+### Step 1: Convert Dataset Format
+
+#### 1.1 Install Dependencies
+
+```bash
+pip install labelme pycocotools pillow numpy tqdm
+```
+
+#### 1.2 Prepare Labelme Dataset
+
+Ensure your dataset structure is as follows:
+```
+labelme_dataset/
+├── image1.jpg
+├── image1.json
+├── image2.jpg
+├── image2.json
+└── ...
+```
+
+#### 1.3 Run Conversion Script
+
+```bash
+python labelme_to_coco.py \
+    --labelme_dir /path/to/labelme_dataset \
+    --output_dir /path/to/coco_dataset \
+    --class_name "your_class_name" \
+    --train_split 0.8
+```
+
+**Parameters:**
+- `--labelme_dir`: Labelme annotation directory (containing JSON and images)
+- `--output_dir`: Output COCO format dataset directory
+- `--class_name`: Class name (e.g., "person", "car", "dog")
+- `--train_split`: Training set ratio (default 0.8, i.e., 80% train, 20% validation)
+
+**Example:**
+```bash
+python labelme_to_coco.py \
+    --labelme_dir ./my_labelme_data \
+    --output_dir ./coco_dataset \
+    --class_name "object" \
+    --train_split 0.8
+```
+
+#### 1.4 Converted Dataset Structure
+
+```
+coco_dataset/
+├── train/
+│   ├── images/
+│   │   ├── image1.jpg
+│   │   ├── image2.jpg
+│   │   └── ...
+│   └── annotations.json
+└── val/
+    ├── images/
+    │   ├── image3.jpg
+    │   ├── image4.jpg
+    │   └── ...
+    └── annotations.json
+```
+
+### Step 2: Configure Training Parameters
+
+#### 2.1 Edit Configuration File
+
+Edit `sam3/train/conf/train_config_single_class.yaml` and modify the following paths:
+
+```yaml
+paths:
+  dataset_root: /path/to/coco_dataset  # Change to your dataset path
+  experiment_log_dir: /path/to/experiments  # Change to experiment output directory
+  bpe_path: assets/bpe_simple_vocab_16e6.txt.gz  # BPE vocabulary path
+
+dataset:
+  class_name: "your_class_name"  # Change to your class name
+```
+
+#### 2.2 Adjust Training Parameters (Optional)
+
+Based on your GPU memory and dataset size, you can adjust:
+
+```yaml
+scratch:
+  train_batch_size: 2  # Can be reduced to 1 if GPU memory is insufficient
+  val_batch_size: 1
+  num_train_workers: 4  # Number of data loading threads
+  resolution: 1008  # Image resolution, can be reduced to save memory
+  max_epochs: 50  # Number of training epochs
+```
+
+### Step 3: Start Training
+
+#### 3.1 Single GPU Training
+
+```bash
+python sam3/train/train.py -c sam3/train/conf/train_config_single_class.yaml
+```
+
+#### 3.2 Multi-GPU Training
+
+If you have multiple GPUs, modify `gpus_per_node` in the configuration file:
+
+```yaml
+launcher:
+  gpus_per_node: 2  # Change to your number of GPUs
+```
+
+Then run:
+```bash
+python sam3/train/train.py -c sam3/train/conf/train_config_single_class.yaml
+```
+
+#### 3.3 Resume Training from Checkpoint
+
+If training is interrupted, you can resume from a checkpoint:
+
+```yaml
+trainer:
+  checkpoint:
+    resume_from: /path/to/checkpoint.pt  # Specify checkpoint path
+```
+
+### Step 4: Monitor Training
+
+#### 4.1 TensorBoard
+
+You can monitor training progress using TensorBoard:
+
+```bash
+tensorboard --logdir /path/to/experiments/tensorboard
+```
+
+#### 4.2 View Logs
+
+Training logs are saved in:
+```
+/path/to/experiments/logs/
+```
+
+### Step 5: Verify Training Results
+
+After training, checkpoints are saved in:
+```
+/path/to/experiments/checkpoints/
+```
+
+Validation results are saved in:
+```
+/path/to/experiments/dumps/val/
+```
+
+### Training Tips
+
+1. **Model Compression**: After training, you can compress the model to save space:
+   ```bash
+   python tools/compress_model.py
+   ```
+   This will extract weights and convert to FP16, reducing model size by ~60%.
+
+2. **Save FP16 Models Directly**: You can configure training to save FP16 models directly:
+   ```yaml
+   checkpoint:
+     save_model_only: true  # Only save model weights
+     save_fp16: true  # Save in FP16 format
+     save_epochs: [10, 20, 30, 40, 50]  # Specify epochs to save
+   ```
+
+3. **Batch Inference**: After training, use the trained model for batch inference:
+   ```bash
+   python tools/batch_inference.py
+   ```
+   See [BATCH_INFERENCE_README.md](tools/BATCH_INFERENCE_README.md) for details.
+
+### Common Issues
+
+#### Q1: Out of Memory (OOM)
+
+**Solutions:**
+1. Reduce `train_batch_size` (change to 1)
+2. Lower `resolution` (change to 800 or smaller)
+3. Reduce `num_train_workers`
+
+#### Q2: Slow Training Speed
+
+**Solutions:**
+1. Increase `num_train_workers`
+2. Use multi-GPU training
+3. Reduce `resolution`
+
+#### Q3: Conversion Script Errors
+
+**Possible causes:**
+1. Incorrect Labelme JSON format
+2. Image paths not found
+3. Polygon annotation format issues
+
+**Solutions:**
+- Check Labelme JSON file format
+- Ensure image files exist
+- Ensure annotations are in polygon format
+
+#### Q4: Class Name Mismatch
+
+**Solution:**
+Ensure the `class_name` in the configuration file matches the name used in the conversion script.
+
+### Complete Example Commands
+
+```bash
+# 1. Convert dataset
+python labelme_to_coco.py \
+    --labelme_dir ./my_labelme_data \
+    --output_dir ./coco_dataset \
+    --class_name "object" \
+    --train_split 0.8
+
+# 2. Edit paths in configuration file
+
+# 3. Start training
+python sam3/train/train.py -c sam3/train/conf/train_config_single_class.yaml
+
+# 4. Monitor training
+tensorboard --logdir ./experiments/tensorboard
+
+# 5. Compress model (after training)
+python tools/compress_model.py
+
+# 6. Batch inference
+python tools/batch_inference.py
+```
+
+### Notes
+
+1. **Class Name**: The class name used during training and inference must be consistent
+2. **Image Format**: Supports common image formats (jpg, png, etc.)
+3. **Annotation Format**: Only supports polygon annotations, not rectangles or other shapes
+4. **Pretrained Model**: First training will automatically download the pretrained model from HuggingFace, requires internet connection
+5. **GPU Requirements**: Recommended to use GPU with at least 16GB VRAM
+
+For more detailed training documentation, see [训练指南.md](训练指南.md).
 
 ## Model
 
@@ -188,159 +369,28 @@ detector is a DETR-based model conditioned on text, geometry, and image
 exemplars. The tracker inherits the SAM 2 transformer encoder-decoder
 architecture, supporting video segmentation and interactive refinement.
 
-## Image Results
+## Results
 
-<div align="center">
-<table style="min-width: 80%; border: 2px solid #ddd; border-collapse: collapse">
-  <thead>
-    <tr>
-      <th rowspan="3" style="border-right: 2px solid #ddd; padding: 12px 20px">Model</th>
-      <th colspan="3" style="text-align: center; border-right: 2px solid #ddd; padding: 12px 20px">Instance Segmentation</th>
-      <th colspan="5" style="text-align: center; padding: 12px 20px">Box Detection</th>
-    </tr>
-    <tr>
-      <th colspan="2" style="text-align: center; border-right: 1px solid #eee; padding: 12px 20px">LVIS</th>
-      <th style="text-align: center; border-right: 2px solid #ddd; padding: 12px 20px">SA-Co/Gold</th>
-      <th colspan="2" style="text-align: center; border-right: 1px solid #eee; padding: 12px 20px">LVIS</th>
-      <th colspan="2" style="text-align: center; border-right: 1px solid #eee; padding: 12px 20px">COCO</th>
-      <th style="text-align: center; padding: 12px 20px">SA-Co/Gold</th>
-    </tr>
-    <tr>
-      <th style="text-align: center; padding: 12px 20px">cgF1</th>
-      <th style="text-align: center; border-right: 1px solid #eee; padding: 12px 20px">AP</th>
-      <th style="text-align: center; border-right: 2px solid #ddd; padding: 12px 20px">cgF1</th>
-      <th style="text-align: center; padding: 12px 20px">cgF1</th>
-      <th style="text-align: center; border-right: 1px solid #eee; padding: 12px 20px">AP</th>
-      <th style="text-align: center; padding: 12px 20px">AP</th>
-      <th style="text-align: center; border-right: 1px solid #eee; padding: 12px 20px">AP<sub>o</sub>
-</th>
-      <th style="text-align: center; padding: 12px 20px">cgF1</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="border-right: 2px solid #ddd; padding: 10px 20px">Human</td>
-      <td style="text-align: center; padding: 10px 20px">-</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">-</td>
-      <td style="text-align: center; border-right: 2px solid #ddd; padding: 10px 20px">72.8</td>
-      <td style="text-align: center; padding: 10px 20px">-</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">-</td>
-      <td style="text-align: center; padding: 10px 20px">-</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">-</td>
-      <td style="text-align: center; padding: 10px 20px">74.0</td>
-    </tr>
-    <tr>
-      <td style="border-right: 2px solid #ddd; padding: 10px 20px">OWLv2*</td>
-      <td style="text-align: center; padding: 10px 20px; color: #999">29.3</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px; color: #999">43.4</td>
-      <td style="text-align: center; border-right: 2px solid #ddd; padding: 10px 20px">24.6</td>
-      <td style="text-align: center; padding: 10px 20px; color: #999">30.2</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px; color: #999">45.5</td>
-      <td style="text-align: center; padding: 10px 20px">46.1</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">23.9</td>
-      <td style="text-align: center; padding: 10px 20px">24.5</td>
-    </tr>
-    <tr>
-      <td style="border-right: 2px solid #ddd; padding: 10px 20px">DINO-X</td>
-      <td style="text-align: center; padding: 10px 20px">-</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">38.5</td>
-      <td style="text-align: center; border-right: 2px solid #ddd; padding: 10px 20px">21.3</td>
-      <td style="text-align: center; padding: 10px 20px">-</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">52.4</td>
-      <td style="text-align: center; padding: 10px 20px">56.0</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">-</td>
-      <td style="text-align: center; padding: 10px 20px">22.5</td>
-    </tr>
-    <tr>
-      <td style="border-right: 2px solid #ddd; padding: 10px 20px">Gemini 2.5</td>
-      <td style="text-align: center; padding: 10px 20px">13.4</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">-</td>
-      <td style="text-align: center; border-right: 2px solid #ddd; padding: 10px 20px">13.0</td>
-      <td style="text-align: center; padding: 10px 20px">16.1</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">-</td>
-      <td style="text-align: center; padding: 10px 20px">-</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">-</td>
-      <td style="text-align: center; padding: 10px 20px">14.4</td>
-    </tr>
-    <tr style="border-top: 2px solid #b19c9cff">
-      <td style="border-right: 2px solid #ddd; padding: 10px 20px">SAM 3</td>
-      <td style="text-align: center; padding: 10px 20px">37.2</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">48.5</td>
-      <td style="text-align: center; border-right: 2px solid #ddd; padding: 10px 20px">54.1</td>
-      <td style="text-align: center; padding: 10px 20px">40.6</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">53.6</td>
-      <td style="text-align: center; padding: 10px 20px">56.4</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">55.7</td>
-      <td style="text-align: center; padding: 10px 20px">55.7</td>
-    </tr>
-  </tbody>
-</table>
+SAM 3 achieves state-of-the-art performance on various benchmarks:
 
-<p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #ddd;">* Partially trained on LVIS, AP<sub>o</sub> refers to COCO-O accuracy</p>
+**Image Results:**
+- SA-Co/Gold: 54.1 cgF1 (Instance Segmentation), 55.7 cgF1 (Box Detection)
+- LVIS: 37.2 cgF1 (Instance Segmentation), 40.6 cgF1 (Box Detection)
+- COCO: 56.4 AP (Box Detection)
 
-</div>
-
-## Video Results
-
-<div align="center">
-<table style="min-width: 80%; border: 2px solid #ddd; border-collapse: collapse">
-  <thead>
-    <tr>
-      <th rowspan="2" style="border-right: 2px solid #ddd; padding: 12px 20px">Model</th>
-      <th colspan="2" style="text-align: center; border-right: 1px solid #eee; padding: 12px 20px">SA-V test</th>
-      <th colspan="2" style="text-align: center; border-right: 1px solid #eee; padding: 12px 20px">YT-Temporal-1B test</th>
-      <th colspan="2" style="text-align: center; border-right: 1px solid #eee; padding: 12px 20px">SmartGlasses test</th>
-      <th style="text-align: center; border-right: 1px solid #eee; padding: 12px 20px">LVVIS test</th>
-      <th style="text-align: center; padding: 12px 20px">BURST test</th>
-    </tr>
-    <tr>
-      <th style="text-align: center; padding: 12px 20px">cgF1</th>
-      <th style="text-align: center; border-right: 1px solid #eee; padding: 12px 20px">pHOTA</th>
-      <th style="text-align: center; padding: 12px 20px">cgF1</th>
-      <th style="text-align: center; border-right: 1px solid #eee; padding: 12px 20px">pHOTA</th>
-      <th style="text-align: center; padding: 12px 20px">cgF1</th>
-      <th style="text-align: center; border-right: 1px solid #eee; padding: 12px 20px">pHOTA</th>
-      <th style="text-align: center; border-right: 1px solid #eee; padding: 12px 20px">mAP</th>
-      <th style="text-align: center; padding: 12px 20px">HOTA</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="border-right: 2px solid #ddd; padding: 10px 20px">Human</td>
-      <td style="text-align: center; padding: 10px 20px">53.1</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">70.5</td>
-      <td style="text-align: center; padding: 10px 20px">71.2</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">78.4</td>
-      <td style="text-align: center; padding: 10px 20px">58.5</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">72.3</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">-</td>
-      <td style="text-align: center; padding: 10px 20px">-</td>
-    </tr>
-    <tr style="border-top: 2px solid #b19c9cff">
-      <td style="border-right: 2px solid #ddd; padding: 10px 20px">SAM 3</td>
-      <td style="text-align: center; padding: 10px 20px">30.3</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">58.0</td>
-      <td style="text-align: center; padding: 10px 20px">50.8</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">69.9</td>
-      <td style="text-align: center; padding: 10px 20px">36.4</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">63.6</td>
-      <td style="text-align: center; border-right: 1px solid #eee; padding: 10px 20px">36.3</td>
-      <td style="text-align: center; padding: 10px 20px">44.5</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+**Video Results:**
+- SA-V test: 30.3 cgF1, 58.0 pHOTA
+- YT-Temporal-1B test: 50.8 cgF1, 69.9 pHOTA
+- SmartGlasses test: 36.4 cgF1, 63.6 pHOTA
 
 ## SA-Co Dataset
 
 We release 2 image benchmarks, [SA-Co/Gold](scripts/eval/gold/README.md) and
 [SA-Co/Silver](scripts/eval/silver/README.md), and a video benchmark
-[SA-Co/VEval](scripts/eval/veval/README.md). The datasets contain images (or videos) with annotated noun phrases. Each image/video and noun phrase pair is annotated with instance masks and unique IDs of each object matching the phrase. Phrases that have no matching objects (negative prompts) have no masks, shown in red font in the figure. See the linked READMEs for more details on how to download and run evaluations on the datasets.
+[SA-Co/VEval](scripts/eval/veval/README.md). The datasets contain images (or videos) with annotated noun phrases. Each image/video and noun phrase pair is annotated with instance masks and unique IDs of each object matching the phrase.
 
 * HuggingFace host: [SA-Co/Gold](https://huggingface.co/datasets/facebook/SACo-Gold), [SA-Co/Silver](https://huggingface.co/datasets/facebook/SACo-Silver) and [SA-Co/VEval](https://huggingface.co/datasets/facebook/SACo-VEval)
 * Roboflow host: [SA-Co/Gold](https://universe.roboflow.com/sa-co-gold), [SA-Co/Silver](https://universe.roboflow.com/sa-co-silver) and [SA-Co/VEval](https://universe.roboflow.com/sa-co-veval)
-
-![SA-Co dataset](assets/sa_co_dataset.jpg?raw=true)
 
 ## Development
 
