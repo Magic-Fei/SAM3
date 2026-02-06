@@ -14,8 +14,8 @@ from pathlib import Path
 # ============================================================================
 # 配置
 # ============================================================================
-INPUT_CHECKPOINT = Path(r"D:\qianpf\code\sam3-main\experiments_lite\checkpoints\checkpoint_30.pt")
-OUTPUT_FP16 = Path(r"D:\qianpf\code\sam3-main\experiments_lite\checkpoints\model_fp16_lite.pt")
+INPUT_CHECKPOINT = Path(r"D:\qianpf\code\sam3-main\experiments_jiaodai\checkpoints\checkpoint_5.pt")
+OUTPUT_FP16 = Path(r"D:\qianpf\code\sam3-main\experiments_jiaodai\checkpoints\checkpoint_1210.pt")
 KEEP_INTERMEDIATE = False  # 是否保留中间的 FP32 纯权重文件
 
 

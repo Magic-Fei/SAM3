@@ -25,10 +25,10 @@ from sam3.model.sam3_image_processor import Sam3Processor
 # Hardcoded configuration
 # ============================================================================
 # 标准模型的checkpoint（已经训练好，可以直接使用）
-CHECKPOINT_PATH = Path(r"D:\qianpf\code\sam3-main\experiments_guajia\checkpoints\checkpoint_fp16.pt")
+CHECKPOINT_PATH = Path(r"D:\qianpf\code\sam3-main\experiments_jiaodai\checkpoints\checkpoint_fp.pt")
 
-INPUT_DIR = Path(r"C:\Users\29923\Desktop\3d_guajia_img\20260105")  # folder containing source images
-OUTPUT_DIR = Path(r"C:\Users\29923\Desktop\3d_guajia_img\20260105")
+INPUT_DIR = Path(r"D:\qianpf\data\auxx\images")  # folder containing source images
+OUTPUT_DIR = Path(r"D:\qianpf\data\auxx\res")
 PROMPT = "visual"  # e.g. "visual", "car", "guajia", etc.
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 SCORE_THRESHOLD = 0.5  # 降低阈值以看到更多检测结果
@@ -36,10 +36,10 @@ USE_FP16 = False # 如果加载的是 FP16 模型，设置为 True
 
 # 保存配置
 SAVE_MASKS = False  # 是否保存 masks 图像（默认关闭）
-SAVE_OVERLAYS = False  # 是否保存 overlays 可视化图像（默认关闭）
+SAVE_OVERLAYS = True  # 是否保存 overlays 可视化图像（默认关闭）
 
 # Labelme 转换配置
-CONVERT_TO_LABELME = True  # 是否转换为 labelme 格式
+CONVERT_TO_LABELME = False # 是否转换为 labelme 格式
 LABELME_ANNOTATION_TYPE = "segmentation"  # 标注类型: "segmentation"（分割）或 "detection"（目标检测）
 
 # 多类别配置（如果训练了多类别模型）

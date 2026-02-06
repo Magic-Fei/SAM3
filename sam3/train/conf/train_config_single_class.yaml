@@ -6,8 +6,8 @@ defaults:
 # 路径配置（硬编码）
 # ============================================================================
 paths:
-  dataset_root: C:/Users/29923/Desktop/3d_guajia_img/guajia_aug/coco # 转换后的 COCO 数据集目录
-  experiment_log_dir: D:/qianpf/code/sam3-main/experiments_guajia  # 实验输出目录
+  dataset_root: D:/qianpf/data/auxx/coco # 转换后的 COCO 数据集目录
+  experiment_log_dir: D:/qianpf/code/sam3-main/experiments_jiaodai  # 实验输出目录
   bpe_path: assets/bpe_simple_vocab_16e6.txt.gz  # BPE 词汇表路径
 
 # ============================================================================
@@ -274,7 +274,7 @@ trainer:
     device: cpus
     eval_mode: false
     enable_segmentation: ${scratch.enable_segmentation}
-    checkpoint_path: D:/qianpf/code/sam3-main/model/sam3/sam3.pt  # 使用本地预训练模型
+    checkpoint_path: D:/qianpf/docker_images/data/model/sam/sam3.pt  # 使用本地预训练模型
     load_from_HF: false  # 禁用从 HuggingFace 下载
 
   meters:
@@ -354,7 +354,10 @@ trainer:
 
   checkpoint:
     save_dir: ${launcher.experiment_log_dir}/checkpoints
-    save_freq: 5  # 每10个epoch保存一次权重，减少存储空间占用
+    save_freq: 5  # 每5个epoch保存一次权重
+    save_model_only: true  # 只保存模型权重，不保存 optimizer/scheduler 状态
+    save_fp16: true  # 直接保存 FP16 模型（节省约 60% 空间）
+    save_epochs: [10, 20, 30, 40, 50, 60, 70, 80]  # 指定保存的 epoch 列表
 
   logging:
     tensorboard_writer:

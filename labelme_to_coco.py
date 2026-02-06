@@ -261,8 +261,8 @@ def main():
     # ============================================================================
     # 硬编码配置 - 请修改以下参数
     # ============================================================================
-    LABELME_DIR = r"C:\Users\29923\Desktop\3d_guajia_img\guajia_aug"  # Labelme 标注文件目录
-    OUTPUT_DIR = r"C:\Users\29923\Desktop\3d_guajia_img\guajia_aug\coco"   # 输出 COCO 数据集目录
+    LABELME_DIR = r"D:\qianpf\data\auxx\test"  # Labelme 标注文件目录
+    OUTPUT_DIR = r"D:\qianpf\data\auxx\coco"   # 输出 COCO 数据集目录
     CLASS_NAMES = None  # 类别名称列表（None 表示自动检测，或指定为 ["class1", "class2", "class3"]）
     TRAIN_SPLIT = 0.85   # 训练集比例 (0.8 = 80% 训练, 20% 验证)
     # ============================================================================

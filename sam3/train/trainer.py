@@ -120,6 +120,12 @@ class CheckpointConf:
     initialize_after_preemption: Optional[bool] = None
     # if not None, training will be resumed from this checkpoint
     resume_from: Optional[str] = None
+    # if True, only save model weights (no optimizer/scheduler state)
+    save_model_only: bool = False
+    # if True, save model weights in FP16 format (half the size)
+    save_fp16: bool = False
+    # list of specific epochs to save (in addition to save_freq)
+    save_epochs: List[int] = field(default_factory=list)
 
     def infer_missing(self):
         if self.initialize_after_preemption is None:
@@ -350,10 +356,13 @@ class Trainer:
         makedir(checkpoint_folder)
         if checkpoint_names is None:
             checkpoint_names = ["checkpoint"]
-            if (
-                self.checkpoint_conf.save_freq > 0
-                and (int(epoch) % self.checkpoint_conf.save_freq == 0)
-            ) or int(epoch) in self.checkpoint_conf.save_list:
+            # 检查是否需要保存当前 epoch（按频率或指定列表）
+            should_save_epoch = (
+                (self.checkpoint_conf.save_freq > 0 and (int(epoch) % self.checkpoint_conf.save_freq == 0))
+                or int(epoch) in self.checkpoint_conf.save_list
+                or int(epoch) in self.checkpoint_conf.save_epochs
+            )
+            if should_save_epoch:
                 checkpoint_names.append(f"checkpoint_{int(epoch)}")
 
         checkpoint_paths = []
@@ -365,17 +374,31 @@ class Trainer:
             patterns=self.checkpoint_conf.skip_saving_parameters, state_dict=state_dict
         )
 
-        checkpoint = {
-            "model": state_dict,
-            "optimizer": self.optim.optimizer.state_dict(),
-            "epoch": epoch,
-            "loss": self.loss.state_dict(),
-            "steps": self.steps,
-            "time_elapsed": self.time_elapsed_meter.val,
-            "best_meter_values": self.best_meter_values,
-        }
-        if self.optim_conf.amp.enabled:
-            checkpoint["scaler"] = self.scaler.state_dict()
+        # 如果设置了 save_fp16，将 FP32 参数转换为 FP16
+        if self.checkpoint_conf.save_fp16:
+            state_dict_to_save = {}
+            for k, v in state_dict.items():
+                if hasattr(v, 'dtype') and v.dtype == torch.float32:
+                    state_dict_to_save[k] = v.half()
+                else:
+                    state_dict_to_save[k] = v
+            state_dict = state_dict_to_save
+
+        # 如果设置了 save_model_only，只保存模型权重
+        if self.checkpoint_conf.save_model_only:
+            checkpoint = state_dict  # 直接保存 state_dict，不包含其他信息
+        else:
+            checkpoint = {
+                "model": state_dict,
+                "optimizer": self.optim.optimizer.state_dict(),
+                "epoch": epoch,
+                "loss": self.loss.state_dict(),
+                "steps": self.steps,
+                "time_elapsed": self.time_elapsed_meter.val,
+                "best_meter_values": self.best_meter_values,
+            }
+            if self.optim_conf.amp.enabled:
+                checkpoint["scaler"] = self.scaler.state_dict()
 
         # DDP checkpoints are only saved on rank 0 (all workers are identical)
         if self.distributed_rank != 0:
