@@ -1,5 +1,11 @@
 # SAM3 标注工具完整使用指南
 
+## 文件说明
+
+- **`batch_annotate_sam3.py`** - 批量标注工具（命令行 + Python API）
+- **`annotator_config.yaml`** - 标注工具配置文件
+- **`sam3_labelme.py`** - GUI 标注工具（如果存在）
+
 ## 目录
 1. [快速开始](#快速开始)
 2. [GUI 标注工具](#gui-标注工具)
@@ -173,60 +179,105 @@ python sam3_annotator.py
 
 ## 批量标注脚本
 
-### 基本用法
+### 方法 1：命令行方式
 
 ```bash
-python batch_annotate.py \
-    --image_dir ./images \
-    --output_dir ./annotations \
+python batch_annotate_sam3.py \
     --model_path ./experiments/checkpoints/model_fp16.pt \
-    --prompts car person
+    --folder ./images \
+    --prompt car \
+    --shape_type polygon \
+    --conf_threshold 0.3 \
+    --max_objects 10 \
+    --label car \
+    --device cuda
 ```
 
-### 完整参数说明
+#### 完整参数说明
 
 | 参数 | 必需 | 说明 | 默认值 |
 |------|------|------|--------|
-| `--image_dir` | ✓ | 输入图像目录 | - |
-| `--output_dir` | ✓ | 输出 JSON 目录 | - |
 | `--model_path` | ✓ | SAM3 模型路径 | - |
-| `--prompts` | ✓ | 类别名称列表 | - |
-| `--threshold` | ✗ | 置信度阈值 | 0.3 |
-| `--no_image_data` | ✗ | 不保存图像数据 | False |
-| `--extensions` | ✗ | 图像扩展名 | .jpg .jpeg .png .bmp |
+| `--folder` | ✓ | 图片文件夹路径 | - |
+| `--prompt` | ✓ | 文本提示词（如 "car", "person"） | - |
+| `--shape_type` | ✗ | 标注类型：`polygon`（分割）或 `rectangle`（检测框） | `polygon` |
+| `--conf_threshold` | ✗ | 置信度阈值 | 0.3 |
+| `--max_objects` | ✗ | 每张图最大标注数量 | 不限制 |
+| `--label` | ✗ | 标签名称（默认使用提示词） | - |
+| `--output_folder` | ✗ | 输出文件夹（默认保存到图片同目录） | - |
+| `--device` | ✗ | 设备：`cuda` 或 `cpu` | `cuda` |
+
+### 方法 2：Python 脚本方式
+
+```python
+from batch_annotate_sam3 import BatchAnnotator
+
+# 创建标注器
+annotator = BatchAnnotator(
+    model_path="experiments/checkpoints/model_fp16.pt",
+    device="cuda"
+)
+
+# 批量处理
+annotator.process_folder(
+    folder_path="./images",
+    text_prompt="car",
+    shape_type="polygon",  # 或 "rectangle"
+    conf_threshold=0.3,
+    max_objects=10,
+    label="car",
+    output_folder=None  # None 表示保存到图片同目录
+)
+```
 
 ### 使用示例
 
-#### 示例 1：标注单个类别
+#### 示例 1：检测汽车（检测框模式）
 
 ```bash
-python batch_annotate.py \
-    --image_dir ./street_images \
-    --output_dir ./street_annotations \
+python batch_annotate_sam3.py \
     --model_path ./experiments/checkpoints/model_fp16.pt \
-    --prompts car
+    --folder ./images \
+    --prompt car \
+    --shape_type rectangle \
+    --conf_threshold 0.3 \
+    --max_objects 5 \
+    --label car
 ```
 
-#### 示例 2：标注多个类别
+#### 示例 2：分割人物（多边形模式）
 
 ```bash
-python batch_annotate.py \
-    --image_dir ./coco_images \
-    --output_dir ./coco_annotations \
+python batch_annotate_sam3.py \
     --model_path ./experiments/checkpoints/model_fp16.pt \
-    --prompts person car bicycle motorcycle bus truck traffic_light \
-    --threshold 0.4
+    --folder ./images \
+    --prompt person \
+    --shape_type polygon \
+    --conf_threshold 0.5 \
+    --max_objects 10 \
+    --label person
 ```
 
-#### 示例 3：不保存图像数据（减小文件大小）
+#### 示例 3：检测多个类别
+
+如果需要检测多个类别，可以分别运行多次：
 
 ```bash
-python batch_annotate.py \
-    --image_dir ./large_dataset \
-    --output_dir ./annotations \
+# 检测汽车
+python batch_annotate_sam3.py \
     --model_path ./experiments/checkpoints/model_fp16.pt \
-    --prompts car \
-    --no_image_data
+    --folder ./images \
+    --prompt car \
+    --shape_type rectangle \
+    --label car
+
+# 检测人物
+python batch_annotate_sam3.py \
+    --model_path ./experiments/checkpoints/model_fp16.pt \
+    --folder ./images \
+    --prompt person \
+    --shape_type rectangle \
+    --label person
 ```
 
 ### 批量标注工作流程
@@ -239,17 +290,22 @@ python batch_annotate.py \
    └── img003.jpg
 
 2. 运行批量标注
-   python batch_annotate.py --image_dir ./images --output_dir ./annotations \
-       --model_path ./model.pt --prompts car person
+   python batch_annotate_sam3.py \
+       --model_path ./model.pt \
+       --folder ./images \
+       --prompt car \
+       --shape_type polygon
 
-3. 生成标注文件
-   ./annotations/
+3. 生成标注文件（保存到图片同目录）
+   ./images/
+   ├── img001.jpg
    ├── img001.json
+   ├── img002.jpg
    ├── img002.json
-   └── img003.json
+   └── ...
 
 4. 使用 labelme 查看/编辑
-   labelme ./annotations/
+   labelme ./images/
 ```
 
 ---
@@ -322,6 +378,40 @@ label_colors:
 
 ### 3. 程序化标注
 
+#### 方法 A：使用 BatchAnnotator 类（推荐）
+
+```python
+from batch_annotate_sam3 import BatchAnnotator
+
+# 创建标注器（只需加载一次模型）
+annotator = BatchAnnotator(
+    model_path="./experiments/checkpoints/model_fp16.pt",
+    device="cuda"
+)
+
+# 批量处理文件夹
+annotator.process_folder(
+    folder_path="./images",
+    text_prompt="car",
+    shape_type="polygon",
+    conf_threshold=0.3,
+    max_objects=10,
+    label="car"
+)
+
+# 或处理单张图片
+labelme_data = annotator.annotate_image(
+    image_path="./image.jpg",
+    text_prompt="car",
+    shape_type="polygon",
+    conf_threshold=0.3,
+    max_objects=5,
+    label="car"
+)
+```
+
+#### 方法 B：直接使用 SAM3 API
+
 ```python
 from sam3.model_builder import build_sam3_image_model
 from sam3.model.sam3_image_processor import Sam3Processor
@@ -349,11 +439,14 @@ masks, boxes, scores = output["masks"], output["boxes"], output["scores"]
 
 ```bash
 # 1. 标注数据
-python batch_annotate.py --image_dir ./raw_images --output_dir ./annotations \
-    --model_path ./model.pt --prompts target_class
+python batch_annotate_sam3.py \
+    --model_path ./model.pt \
+    --folder ./raw_images \
+    --prompt target_class \
+    --shape_type polygon
 
 # 2. 转换格式（如需要）
-python convert_labelme_to_coco.py --input ./annotations --output ./coco_format
+python labelme_to_coco.py --input ./annotations --output ./coco_format
 
 # 3. 训练模型
 python sam3/train/train.py --config ./train_config.yaml
@@ -395,8 +488,8 @@ python sam3/train/train.py --config ./train_config.yaml
 **问题：** 生成的 JSON 文件占用大量存储空间
 
 **解决方案：**
-- 使用 `--no_image_data` 参数不保存 base64 图像数据
-- 增加 `polygon_tolerance` 简化多边形
+- 默认不保存图像数据（`imageData` 为 `null`），已减小文件大小
+- 使用 `--max_objects` 限制每张图的标注数量
 - 使用更高的置信度阈值减少标注数量
 
 ### Q5: 批量标注速度慢
@@ -492,8 +585,11 @@ python sam3_annotator.py
 
 **批量标注：**
 ```bash
-python batch_annotate.py --image_dir ./images --output_dir ./annotations \
-    --model_path ./model.pt --prompts car person
+python batch_annotate_sam3.py \
+    --model_path ./model.pt \
+    --folder ./images \
+    --prompt car \
+    --shape_type polygon
 ```
 
 祝标注愉快！ 🚀
